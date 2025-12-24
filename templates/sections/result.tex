@@ -1,0 +1,78 @@
+\section{Results and Discussions}
+
+Deepseek-Coder-7B-Instruct v1.5~\cite{guo2024deepseekcoder}
+%  \begin{table}[!htb]
+%     \centering
+%     \caption{Performance Benchmarks of \glspl{sllm} in Verilog Generation with VerilogEval~\cite{10323812,10.1145/3718088}.}
+%     \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         Models& $pass@1$& $pass@5$& $pass@10$\\\hline
+%         MG-Verilog-CodeLlama-7B~\cite{10691738}& 54.5 &60 &63\\\hline
+%         RTLCoder-DeepSeek~\cite{liu2025rtlcoder}& 61.2 &76.5 &81.8\\\hline
+%         DeepSeek-Coder-7B-Instruct-PyraNet~\cite{11133406} &77.6 &84.6 &89.5\\\hline
+%         \hline
+%         Mistral-Instruct 7B-4Bit& 16.67& 17.18& 16.47\\\hline
+%         CodeLLama-Instruct 7B-4Bit& 10.9& 10.77& 9.23 \\\hline
+%         CodeLLama-Instruct-COMBA 7B-4Bit& 10.9& 13.21& 12.82 \\\hline
+%         DeepSeek-Coder-COMBA 7B& 0.1& 0.1& 0.1 \\\hline
+%         \MyLLM-DeepSeek-Coder 7B& 33.33& 33.33& 33.33 \\\hline
+%     \end{tabular}
+%     \label{tab:placeholder}
+% \end{table}
+
+\begin{table}[]
+    \centering
+    \caption{Performance Benchmarks of \glspl{sllm} in Verilog Generation with VerilogEval V2~\cite{10.1145/3718088}.}
+    \label{tab:tab1}
+\begin{tabular}{|c|c|c|c|c|c|}
+\toprule
+\bfseries Model Name & \bfseries Model Size & \multicolumn{4}{c|}{\bfseries Task: Code Completion} \\ \midrule
+\multicolumn{2}{|r|}{In-context Learning Examples:} & \multicolumn{2}{c}{Zero Shot} & \multicolumn{2}{c|}{One Shot} \\
+\multicolumn{2}{|r|}{Temperature:}  & T = 0 & T = 0.8 & T = 0 & T = 0.8 \\
+% Model Name &  &  &  &  &  \\
+\midrule
+GPT-4o~\cite{gpt4o} & Undisclosed & 59.0\% & 56.1\% & 62.8\% & 60.7\% \\ \midrule
+GPT-4 Turbo~\cite{gpt4_turbo_announce} & Undisclosed & 53.9\% & 49.8\% & 59.6\% & 59.5\% \\ \midrule
+GPT-4~\cite{gpt4} & Undisclosed & 42.3\% & 41.6\% & 51.3\% & 50.1\% \\ \midrule
+Mistral Large~\cite{ai_au_2024} & Undisclosed & 34.0\% & 33.1\% & 44.2\% & 42.7\% \\ \midrule
+Llama3.1~\cite{noauthor_meta-llamallama3_2024} & 405B & 56.4\% & 57.0\% & 59.6\% & 57.9\% \\ \midrule
+Llama3.1~\cite{noauthor_meta-llamallama3_2024} & 70B & 35.3\% & 36.3\% & 34.0\% & 33.0\% \\ \midrule
+Llama3~\cite{noauthor_meta-llamallama3_2024} & 70B & 37.8\% & 39.1\% & 36.5\% & 36.5\% \\ \midrule
+Llama2~\cite{noauthor_meta-llamallama3_2024} & 70B & 1.3\% & 1.7\% & 15.4\% & 13.3\% \\ \midrule
+CodeLlama~\cite{noauthor_meta-llamacodellama-70b-instruct-hf_2024} & 70B & 37.2\% & 29.0\% & 41.7\% & 27.4\% \\ \midrule
+DeepSeek Coder~\cite{guo2024deepseekcoder} & 33B & 25.0\% & 29.3\% & 42.3\% & 37.5\% \\ \midrule
+Llama3.1~\cite{noauthor_meta-llamallama3_2024} & 8B & 2.6\% & 4.9\% & 10.9\% & 12.8\% \\ \midrule
+CodeGemma~\cite{noauthor_googlecodegemma-7b_2024} & 7B & 8.3\% & 8.7\% & 19.9\% & 16.2\% \\ \midrule
+DeepSeek Coder~\cite{guo2024deepseekcoder} & 6.7B & 24.4\% & 21.0\% & 33.3\% & 30.3\% \\ \midrule
+RTL-Coder~\cite{liu2025rtlcoder} & 6.7B & 35.9\% & 31.5\% & 37.2\% & 32.6\% \\ \toprule\bottomrule
+
+\MyLLM-DeepSeek-Coder & 7B & \bfseries 67.3\% & \bfseries 62.6\% & \bfseries 70.5\% & \bfseries 62.3\% \\\toprule\bottomrule
+
+\MyLLM-DeepSeek-Coder & 7B & \bfseries 51.9\% & \bfseries 55.3\%& \bfseries 55.1\%& \bfseries 55.2\%\\
+\midrule
+\MyLLM-DeepSeek-Coder & 7B & \bfseries 53.2\% & \bfseries 53.1\%& \bfseries 59.6\%& \bfseries 52.4\%\\
+\midrule
+\MyLLM-DeepSeek-Coder & 7B & \bfseries 49.4\% & \bfseries 49.5\%& \bfseries 53.2\%& \bfseries 50.8\%\\
+\midrule
+\MyLLM-DeepSeek-Coder & 7B & \bfseries 46.8\% & \bfseries 49.7\%& \bfseries 50\%& \bfseries 47\%\\
+\bottomrule
+\end{tabular}
+
+{Number of samples $n = 1$ when $T = 0$ and $n = 20$ when $T = 0.8$.}
+\end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{templates/figures/all_plot_VE_stat_v1.pdf}
+    % \vspace{-1.5cm}
+    \caption{Variability of VerilogEval Success Rate with Number of Logic Cells in the Task ``Code Completion'' (Zero Shot with $T = 0.8$ and $n = 20$).}
+    \label{fig:ve_stat}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{templates/figures/all_plot_VE_stat.pdf}
+    % \vspace{-1.5cm}
+    \caption{Variability of VerilogEval Success Rate with Number of Logic Cells in the Task ``Code Completion'' (Zero Shot with $T = 0.8$ and $n = 20$).}
+    \label{fig:ve_stat_2}
+\end{figure}

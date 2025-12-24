@@ -1,0 +1,178 @@
+%%%%%%%%%%%%%%%%%%%% author.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% sample root file for your "contribution" to a proceedings volume
+%
+% Use this file as a template for your own input.
+%
+%%%%%%%%%%%%%%%% Springer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{styles/svproc}
+%
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+% to typeset URLs, URIs, and DOIs
+\usepackage{url}
+\def\UrlFont{\rmfamily}
+
+\usepackage{amsmath}
+\usepackage[super]{nth}
+% \newcommand{\MyLLM}{REFINE-Verilog} % LORAV, MIHA-Verilog, COMBA-Coder, Mani-RTL, LORAFIV
+
+\usepackage{myacronyms}
+\usepackage{graphicx}
+\usepackage{multirow}
+
+% table
+	
+\usepackage{booktabs}
+
+% % https://tex.stackexchange.com/questions/4709/how-do-i-set-a-maximum-column-width
+\usepackage{array} % for defining a new column type
+\usepackage{varwidth}
+
+\def\MyLLMTitle{REFINE-Verilog}
+\def\MyLLM{REFINE\nobreakdash-Verilog}
+
+% \def\M-#1{M\nobreakdash-#1}
+% \def\MyLLM{\M-{Verilog}}
+\begin{document}
+%
+% https://tex.stackexchange.com/questions/4709/how-do-i-set-a-maximum-column-width
+\newcolumntype{M}{>{\begin{varwidth}{90em}}c<{\end{varwidth}}} %M is for Maximal column
+
+\mainmatter              % start of a contribution
+%
+% \title{\MyLLM: \underline{M}ulti-\underline{I}nstance \underline{H}ierarchical Fine-Tuning for Small \gls{llm} in Simple Verilog Generation Leveraging \gls{lora} \underline{A}pproach}
+% \title{\MyLLM: \underline{Lo}gic \underline{Ra}nking-based Fine-tuning Scheme for \glsfmtlong{slm} in Simple \underline{V}erilog Generation Leveraging \gls{lora} Technique}
+% \title{\MyLLM: \underline{Lo}gic \underline{Ra}nking-based \underline{F}ine-tuning and \underline{I}nferencing Enhancement for \glsfmtlong{slm} in Partial \underline{V}erilog Generation}
+\title{\MyLLMTitle: \underline{Re}liability-based \underline{F}ine-tuning and \underline{In}ference \underline{E}nhancement for \glsfmtlong{slm} in Partial Verilog Generation}
+%
+\titlerunning{Fine-Tuning and Inference Enhancement for \glsfmtshort{slm} in Partial Verilog Generation}  % abbreviated title (for running head)
+
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{Vu-Minh-Thanh Nguyen\inst{1,2}
+\and Ngoc-Thien-Kim Nguyen\inst{1,2}
+\and Duc-Hung Le\inst{1,2}}
+%
+\authorrunning{Vu-Minh-Thanh Nguyen et al.} % abbreviated author list (for running head)
+%
+%%%% list of authors for the TOC (use if author list has to be modified)
+\tocauthor{Vu-Minh-Thanh Nguyen, Duc-Phu Do, Ngoc-Thien-Kim Nguyen, and Duc-Hung Le}
+%
+\institute{Faculty Electronics and Telecommunications, University of Science, \\ Ho Chi Minh City, Vietnam \and Vietnam National University, Ho Chi Minh City, Vietnam\\
+\email{ldhung@hcmus.edu.vn}}
+
+% \glsunset{llm}
+\glsunset{lora}
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+%
+% % Basis of LLM
+% \gls{llm} has shown promising potential in various aspects of \gls{rtl} design. However, partial \gls{rtl} generation still faces many challenges in reliability and reveals many unexpected logic behaviors.
+% %
+% % How do I address this?
+% To address these challenges, we introduce \MyLLM, a comprehensive construction in both fine-tuning and inference for partial Verilog generation.
+% % What is my technique?
+% In dataset construction, we implement ranking-based logic with loss weighting to form expected behaviors of \gls{llm} in fine-tuning with various Verilog complexities. In Verilog generation process, we implement dedicated techniques to resolve unusual results in prompting and logic behaviors of \gls{llm} output.
+% % 
+% % Result
+% On applying \MyLLM on DeepSeek-Coder-7B, our 7B-sized model outperforms other commercial and open-source \gls{llm} in the task Code Completion of VerilogEval V2.
+% % 
+% % What is the contribution of this work?
+% Finally, \MyLLM constructs strong foundation in partial Verilog generation of further hybrid architecture for \gls{llm}-powered\gls{rtl} design.
+% % 
+% Our public \gls{llm} and \break source code can be accessed at \url{https://huggingface.co/nvmthanhhcmus/LORAV-DeepSeek-Coder}.
+% 
+% Paraphrase
+\glspl{llm} have demonstrated strong potential across multiple stages of \gls{rtl} design, but partial \gls{rtl} generation still suffers from reliability issues and can exhibit unexpected logic behaviors. To overcome these limitations, we propose \MyLLM, a comprehensive framework that constructs both fine-tuning and inference for partial Verilog generation. For dataset construction, we adopt a ranking-based strategy with loss weighting to encourage the desired \gls{llm} behavior during fine-tuning across a range of Verilog complexities. During generation, we further apply specialized methods to mitigate anomalous prompting outcomes and incorrect logic patterns in \gls{llm} outputs. When applied to DeepSeek-Coder-7B, our 7B model surpasses both commercial and open-source \glspl{llm} on the VerilogEval V2 at the Code Completion task. Overall, \MyLLM\ establishes a solid foundation for partial Verilog generation and supports future hybrid architectures, such as agentic \glspl{llm}, for \gls{llm}-powered \gls{rtl} design. Our public \gls{llm} and source code are available at \break\url{https://huggingface.co/nvmthanhhcmus/LORAV-DeepSeek-Coder}.
+
+% 
+% 
+% 
+% How to ensure reliability in partial Verilog generation?
+% How to reduce unprecedented logic behavior in Verilog dataset in fine-tuning?
+
+% 
+
+
+%
+%%%%%%%
+% What are easy tasks in Verilog coding?
+% \gls{llm} in easy tasks. Especially, generation of single-module Verilog designs or designs with 2-to-3 instantiations.
+
+% Fine-tuning scheme for simple Verilog generation based on logic ranking in combination with \gls{lora} technique.
+
+\keywords{Verilog Generation, LoRa Fine-Tuning, Small Language Model, Partial RTL Design}
+\end{abstract}
+%
+\glsresetall
+
+\input{sections/introduction}
+
+\section{Introduction}
+
+Major purpose: What is the use of Small \glspl{llm} in Verilog generation?~\cite{chen2025rolesmallmodelsllm}
+
+Are Small \glspl{llm} able to perform any simple tasks in Verilog design? Can they design one module? Can they make simple instantiations, between 1-to-3 module compositions?
+
+How to make a \gls{sllm} become more expert in simple Verilog?
+How to make training of an \gls{sllm} become more specialized in simple Verilog design?
+
+What is the dataset facilitating Simple Verilog design for \gls{sllm}?
+Are current Verilog datasets constructed in all Simple Verilog Design?
+
+Our environment:
+
+\begin{itemize}
+    \item Professional prompt engineers in Verilog design?
+    \item 
+\end{itemize}
+
+Our contributions:
+
+\begin{itemize}
+    \item Typical XML-based Verilog description dataset.
+    \item Curriculum Training Scheme: From Basic, to Intermediate. Through LoRa Rank
+\end{itemize}
+
+Our purposes:
+
+\begin{itemize}
+    \item Semantic enhancements for Verilog dataset for fine-tuning? Fine-tune model DeepSeek-Coder~\cite{guo2024deepseek}.
+    \item Increase consciousness of LLM in thinking of fixing Verilog exceptions in 
+    \item Optimize context of LLM on handling a complex Verilog Module: distil a complex conversation to a single prompt. Hence \verb|-->| abstractionize a complex conversation to a single prompt for portability of
+    \item Detailed and complex prompt, compared to \cite{10691738}.
+\end{itemize}
+
+COMBA-PROMPT \cite{docomba}
+
+Problems from other works:
+
+\begin{itemize}
+    \item MG-Verilog~\cite{10691738}: Datasets with only high-level descriptions may not provide sufficient detail for accurate code generation or effective LLM training (i.e., fine-tuning or pretraining), especially for complex designs.
+    \begin{itemize}
+        \item MG-Verilog with QLora~\cite{dettmers2023qloraefficientfinetuningquantized}.
+        \item Is it unable to use \gls{lora}~\cite{hu2022lora}? And why not using full fine-tuning?
+    \end{itemize}
+    \item Instruction fine-tuning with Pyranet dataset~\cite{11133406}, with Aplaca Prompt Template~\cite{taori2023alpaca}. Or Vicunha~\cite{chiang2023vicuna}?
+\end{itemize}
+
+\input{sections/method}
+\input{sections/result}
+
+\clearpage
+
+\section{Conclusion}
+
+\section{\ackname}
+
+This research is funded by University of Science, VNU-HCM under grant number DTVT 2024-05.
+
+\bibliographystyle{styles/bibtex/spmpsci.bst}
+\bibliography{mybibfile}
+
+\end{document}
