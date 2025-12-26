@@ -48,7 +48,7 @@
 % \title{\MyLLM: \underline{Lo}gic \underline{Ra}nking-based \underline{F}ine-tuning and \underline{I}nferencing Enhancement for \glsfmtlong{slm} in Partial \underline{V}erilog Generation}
 \title{\MyLLMTitle: \underline{Re}liability-based \underline{F}ine-tuning and \underline{In}ference \underline{E}nhancement for \glsfmtlong{slm} in Partial Verilog Generation}
 %
-\titlerunning{Fine-Tuning and Inference Enhancement for \glsfmtshort{slm} in Partial Verilog Generation}  % abbreviated title (for running head)
+\titlerunning{Fine-Tuning and Inference for \glsfmtshort{slm} in Partial Verilog Generation}  % abbreviated title (for running head)
 
 %                                     also used for the TOC unless
 %                                     \toctitle is used
@@ -88,7 +88,7 @@
 % Our public \gls{llm} and \break source code can be accessed at \url{https://huggingface.co/nvmthanhhcmus/LORAV-DeepSeek-Coder}.
 % 
 % Paraphrase
-\glspl{llm} have demonstrated strong potential across multiple stages of \gls{rtl} design, but partial \gls{rtl} generation still suffers from reliability issues and can exhibit unexpected logic behaviors. To overcome these limitations, we propose \MyLLM, a comprehensive framework that constructs both fine-tuning and inference for partial Verilog generation. For dataset construction, we adopt a ranking-based strategy with loss weighting to encourage the desired \gls{llm} behavior during fine-tuning across a range of Verilog complexities. During generation, we further apply specialized methods to mitigate anomalous prompting outcomes and incorrect logic patterns in \gls{llm} outputs. When applied to DeepSeek-Coder-7B, our 7B model surpasses both commercial and open-source \glspl{llm} on the VerilogEval V2 at the Code Completion task. Overall, \MyLLM\ establishes a solid foundation for partial Verilog generation and supports future hybrid architectures, such as agentic \glspl{llm}, for \gls{llm}-powered \gls{rtl} design. Our public \gls{llm} and source code are available at \break\url{https://huggingface.co/nvmthanhhcmus/LORAV-DeepSeek-Coder}.
+\glspl{llm} have demonstrated strong potential across multiple stages of \gls{rtl} design, but partial \gls{rtl} generation still suffers from reliability issues and can exhibit unforeseen logic behaviors. To overcome these limitations, we propose \MyLLM, a comprehensive framework that constructs both fine-tuning and inference for partial Verilog generation. For dataset construction, we adopt a ranking-based strategy with loss weighting to encourage the desired \gls{llm} behavior during fine-tuning across a range of Verilog complexities. During generation, we further apply specialized methods to mitigate anomalous prompting outcomes and incorrect logic patterns in \gls{llm} outputs. When applied to DeepSeek-Coder-7B, our 7B model surpasses both commercial and open-source \glspl{llm} on the VerilogEval V2 at the Code Completion task. Overall, \MyLLM\ establishes a solid foundation for partial Verilog generation and supports future hybrid architectures, such as agentic \glspl{llm}, for \gls{llm}-powered \gls{rtl} design. Our public \gls{llm} and source code are available at \break\url{https://huggingface.co/nvmthanhhcmus/LORAV-DeepSeek-Coder}.
 
 % 
 % 
@@ -106,60 +106,13 @@
 
 % Fine-tuning scheme for simple Verilog generation based on logic ranking in combination with \gls{lora} technique.
 
-\keywords{Verilog Generation, LoRa Fine-Tuning, Small Language Model, Partial RTL Design}
+\keywords{Verilog Generation, Loss Weighting, Small Language Model, Partial RTL Design}
 \end{abstract}
 %
 \glsresetall
 
 \input{sections/introduction}
 
-\section{Introduction}
-
-Major purpose: What is the use of Small \glspl{llm} in Verilog generation?~\cite{chen2025rolesmallmodelsllm}
-
-Are Small \glspl{llm} able to perform any simple tasks in Verilog design? Can they design one module? Can they make simple instantiations, between 1-to-3 module compositions?
-
-How to make a \gls{sllm} become more expert in simple Verilog?
-How to make training of an \gls{sllm} become more specialized in simple Verilog design?
-
-What is the dataset facilitating Simple Verilog design for \gls{sllm}?
-Are current Verilog datasets constructed in all Simple Verilog Design?
-
-Our environment:
-
-\begin{itemize}
-    \item Professional prompt engineers in Verilog design?
-    \item 
-\end{itemize}
-
-Our contributions:
-
-\begin{itemize}
-    \item Typical XML-based Verilog description dataset.
-    \item Curriculum Training Scheme: From Basic, to Intermediate. Through LoRa Rank
-\end{itemize}
-
-Our purposes:
-
-\begin{itemize}
-    \item Semantic enhancements for Verilog dataset for fine-tuning? Fine-tune model DeepSeek-Coder~\cite{guo2024deepseek}.
-    \item Increase consciousness of LLM in thinking of fixing Verilog exceptions in 
-    \item Optimize context of LLM on handling a complex Verilog Module: distil a complex conversation to a single prompt. Hence \verb|-->| abstractionize a complex conversation to a single prompt for portability of
-    \item Detailed and complex prompt, compared to \cite{10691738}.
-\end{itemize}
-
-COMBA-PROMPT \cite{docomba}
-
-Problems from other works:
-
-\begin{itemize}
-    \item MG-Verilog~\cite{10691738}: Datasets with only high-level descriptions may not provide sufficient detail for accurate code generation or effective LLM training (i.e., fine-tuning or pretraining), especially for complex designs.
-    \begin{itemize}
-        \item MG-Verilog with QLora~\cite{dettmers2023qloraefficientfinetuningquantized}.
-        \item Is it unable to use \gls{lora}~\cite{hu2022lora}? And why not using full fine-tuning?
-    \end{itemize}
-    \item Instruction fine-tuning with Pyranet dataset~\cite{11133406}, with Aplaca Prompt Template~\cite{taori2023alpaca}. Or Vicunha~\cite{chiang2023vicuna}?
-\end{itemize}
 
 \input{sections/method}
 \input{sections/result}

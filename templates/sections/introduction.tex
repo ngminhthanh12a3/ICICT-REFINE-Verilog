@@ -1,66 +1,60 @@
 \section{Introduction}
 
 % 
-% What is LLM? What is its effect on the whole world?
-% 1
-\gls{llm} is an unprecedented innovation in many aspects of the world. Moreover, the revolution of \gls{llm} has promoted many efforts on applying \gls{llm} abilities to achieve effectiveness, performance, and efficiency. The adoption of \gls{llm} is very diverse in various applications, such as natural language generation, speech processing, code generation, or image classification~\cite{10.1145/3639372,cui-etal-2025-recent,10.1145/3641289,yin2024survey}.
+% Why Large Language Models?
+% \gls{llm} has shown strong potential in various aspects of technology, able to perform various processes of automation and optimization.
+% % Does it help in Hardware design?
+% Especially in \gls{eda}, many efforts have been made to incorporate \gls{llm} abbility in design flow that includes code generation, testbench generation, and automatic debugging~\cite{10.1145/3715324}. Among all \gls{eda} stages, automated generation of \gls{rtl} design is the main target of the most recent research due to its enormous public resources~\cite{10.1145/3649476.3660390}.
+% How to apply LLM in prompting, fine-tuning, and agentic architectures?
+% para
+\gls{llm} models have demonstrated substantial promise across a wide range of technologies, enabling automation and optimization in many workflows. In \gls{eda} in particular, recent studies have explored integrating \gls{llm} capabilities into the design flow for tasks such as code generation, testbench creation, and automated debugging~\cite{10.1145/3715324}. Among the \gls{eda} stages, automatic \gls{rtl} generation has emerged as a primary focus of current research, largely because abundant public resources are available to support this direction~\cite{10.1145/3649476.3660390}.
+
+% Within an \gls{llm}-powered hardware design flow, the applications of \gls{llm} are considerably diverse in various approaches, such as prompting, fine-tuning, and agentic architectures.
+% % 
+% % What are efforts of other works in enhancing LLM behaviors in Verilog Design?
+% %   What are these benefits and drawbacks?
+% % Prompting
+% %   Does it help LLM to generate complex module? Why not?
+% %   Are there other prompting techniques for agentic LLMs?
+% % In enhancing \gls{llm} behavior in Verilog design, many methods in prompting, fine-tuning, and agentic building have been proposed.
+% In prompting, ChipGPT~\cite{chang2023improving} and RTLLM~\cite{lu2024rtllm} demonstrate advanced prompt formats based on plaintext to enhance context awareness of logic specifications. On the other side, COMBA-PROMPT~\cite{docomba} demonstrates a novel prompting based on a format language, which is \gls{xml}. Based on these prompt structures, \gls{llm} performs more precisely in definitions and overall operations of Verilog modules. However, Verilog prompting requires considerable further efforts in generating complex Verilog modules with many aspects of simulation, testing, and composition.
+% para
+In an \gls{llm}-enabled hardware design workflow, \gls{llm} techniques span a broad range of strategies, including prompting, fine-tuning, and agentic architectures. To improve \gls{llm} performance for Verilog design, prior work has proposed approaches across all three directions. For prompting, ChipGPT~\cite{chang2023improving} and RTLLM~\cite{lu2024rtllm} introduce enhanced plaintext prompt templates that strengthen the model’s understanding of logic specifications and contextual constraints. In contrast, COMBA-PROMPT~\cite{docomba} proposes a structured prompting scheme using a format language, namely \gls{xml}. These prompt designs generally enable \gls{llm} models to produce more accurate definitions and more consistent end-to-end behavior in generated Verilog modules. Nevertheless, prompting alone still demands substantial additional effort when targeting complex Verilog designs that involve simulation, verification, and multi-module composition.
+
+
+% % 
+% % Fine-tuning
+% Besides prompting, another approach to improve the behavior of \gls{llm} in Verilog generation is fine-tuning. In this approach, most research focuses on fine-tuning schemes, dataset sampling, and categorization~\cite{liu2025rtlcoder,10691738,11133406}.
+% % What are their problems?
+% Most targets of fine-tuning efforts are \gls{slm} with the parameter size of 7 billion. Based on \gls{llm}-evaluating benchmarks for Verilog generation, such as  RTLLM~\cite{lu2024rtllm,10.1145/3676536.3697118} and VerilogEval~\cite{10323812,10.1145/3718088}, \glspl{slm}, such as DeepSeek and CodeLlama, perform sufficiently in providing qualified Verilog code in the range of simple Verilog modules with single instanciation. However, training datasets from existing works provide no assurance for the suitability of Verilog code for a \gls{slm}. Especially, those training datasets incorporate a significant imbalance of logic complexity~\cite{ALSAQER20252392}. Therefore, after training, \glspl{slm} are easy to generate unexpected results related to out-of-context generation, over-generic Verilog code, or resoning failures.
+% para
+Beyond prompting, fine-tuning is another common strategy for improving \gls{llm} performance in Verilog generation. Existing studies primarily investigate fine-tuning schemes, dataset sampling strategies, and data categorization schemes \cite{liu2025rtlcoder,10691738,11133406}. Most of these efforts target \glspl{slm} with roughly 7B parameters. On standard evaluation suites for Verilog generation, including RTLLM~\cite{lu2024rtllm,10.1145/3676536.3697118} and VerilogEval~\cite{10323812,10.1145/3718088}, 7B-class \glspl{slm} such as DeepSeek and CodeLlama can produce acceptable Verilog for relatively simple, single-instantiation modules. However, the datasets used in prior work do not guarantee that the training data are well matched to the capabilities and constraints of a \gls{slm}. In particular, these datasets often exhibit substantial imbalance in logic complexity~\cite{ALSAQER20252392}. As a result, even after fine-tuning, \glspl{slm} may still produce undesirable behaviors, including out-of-context generations, overly generic Verilog, or reasoning-related failures.
+
+% % 
+% % Agentic LLMs
+% % 
+% % what are they, and what is the problem with them?
+% Moreover, \gls{llm}-based agentic frameworks~\cite{ho2025verilogcoder,11133191,nadimi2025verimindagenticllmautomated} for Verilog Generation are also proposed to handle further complex tasks in \gls{rtl} design. In constrainment of existing benchmarks in Verilog generation, the agentic frameworks perform more precisely, compared to methods leveraging only prompting or fine-tuning. 
+% % VerilogCoder~\cite{ho2025verilogcoder,11133191,nadimi2025verimindagenticllmautomated}, agentic \glspl{llm} framework, waveform back tracing, achive $94.2\%$ in Verilog Human Eval V2.
+% However, to achieve enhancement in Verilog code result, an agentic flow for \gls{rtl} design requires a significant amount of \gls{rtl} specifications, especially Verilog testbench, in combination with additional contexts related to debugging, testbench generation, and scoreboarding. Additionally, partial Verilog and other additional generations of a multi-agent framework are insufficient in reliability due to relying on only general knowledge of \gls{llm} in scarce resources of testbench, \gls{rtl} ranking, and categorization.
+% para
+In addition, several \gls{llm}-driven agentic frameworks~\cite{ho2025verilogcoder,11133191,nadimi2025verimindagenticllmautomated} have been introduced for Verilog generation to tackle more complex \gls{rtl} design tasks. Under the constraints of current Verilog-generation benchmarks, these agent-based systems often deliver higher precision than approaches based solely on prompting or fine-tuning. Nevertheless, obtaining such improvements typically demands substantial \gls{rtl} specifications, most notably detailed Verilog testbenches, together with extra context for debugging, testbench synthesis, and scoreboarding. Furthermore, partial-Verilog outputs and other auxiliary generations produced within multi-agent pipelines can remain unreliable, as they largely depend on the \gls{llm}'s general knowledge while operating with limited resources for testbench construction, \gls{rtl} ranking, and complexity categorization.
+% general knowledge. lack of knowledge of such debugging, testbench generation, or evaluation generation.
 % 
-% What are the effects of LLM on agiel hardware designs?
-In fields of engineering, the \gls{llm} usage is very diverse in various procedures ranging from software to hardware~\cite{10.1145/3695988,10876858}. In particular, in hardware engineering, researchers start to explore \gls{llm} capability in hardware design, especially in \gls{rtl} design and verification~\cite{chang2023improving}. Based on the power of \gls{llm}, many potentials are revealed in the automated generation of \gls{rtl} design and testbench~\cite{joel2024survey}.
+% partial Verilog generation of each partial \glspl{slm}.
+% 
+% beyond
+% What if focusing on Partial Verilog generation, to form solid construction for further complex
 
 % 
-% Why "Simple" in Verilog Generation?
-% Why is "Simple" in Verilog Generation matter?
-% Why not Complex task/design in Verilog generation?
-Regarding handling complex task in \gls{rtl} design, complicated settings in promting and task decomposition are required \cite{tang2025hivegen}.
-
 % 
-%%%%%%%%%%%
-% How to adopt LLM in RTL designs?
-% 		○ How to use LLM effectively in agiel RTL generation?
-% 		○ Is it related to prompting and fine-tuning?
-% 		○ How is prompting effective in LLM-powered RTL design?
-On using \gls{llm} effectively in agile \gls{rtl} design, the two major approaches are prompt engineering based on \gls{icl}~\cite{lu2024rtllm,gubbi2025prompting,bhattacharyya2024llm,docomba} and instruction fine-tuning~\cite{liu2025rtlcoder,10691738,11133406}. In the prompting approach, immediate effectiveness and performance in syntactic and functional correctness of \gls{rtl} design are easy to achieve by constructing logic definitions and descriptions in the context of generative \gls{llm}, such as GPT-4, Claude 3.5 Sonet, or DeepSeek-R1. Additionally, these generative models with enormous parameter size
-
-% 
-% Our contribution
-
-
-% 
-% %%%%%%%%%%%%%%%%%%%%%%%%
-% What am I doing?
-% Why do I do this stuff?
-% Why train this LLM? Why not others?
-% Is the DeepSeek Coder a good basis to start from coding's perspective?
-% Is it good for instruction tuning for domain-specific tasks in Verilog generation?
-% Is the way I fine-tune and customize this meaningful to techniques in constructing an LLM for Verilog generation?
-% But what is the root basis to use LLM in such Verilog generation?
-% Do the base models perform well in coding, especially in Verilog coding?
-% Does it have big efforts in instructing LLM to make it more specific in Verilog generation?
-% Are there any bases from existing research papers for this?
-% Why does everyone use LLM? Why should and shouldn't they?
-% Does LLM facilitate anything in humans' stuff?
-% Does LLM boost or make something quickly and effectively?
-
-\gls{llm}~\cite{10.1145/3641289}.
-
-\gls{slm}~\cite{10.1145/3768165}
-
-% 
-%%%%%%%%%%%%%%%%%%%%%%
-Why use LLM?
-\gls{llm} is good at what?
-Why not using \gls{llm}?
-How does \gls{llm} facilitate generation stuff?
-Are \glspl{sllm} able to serve complex tasks, especially in \gls{rtl} design?
-Is LLM good? Is it reliable? And why is very enormous to all aspects of the world?
-Why is it used many, regularly?
-%%% Currently, \glspl{llm} have become an astounding explosion in almost all aspects of the world~\cite{YAO2024100211}. Due to its enormous benefits, many \glspl{llm}, such as ChatGPT, Claude, etc., have been quickly become popular in many aspects of both academia and industry~\cite{fi15060192}.
-
-
-So, the logic is good to be a consideration for fine-tuning LLM
-But are there any bases to perform LLM training based on logic-specific metrics?
-Why training based on quality evaluation, from LLM, is not a good consideration?
-
-Why do I have to optimize fine-tuning for low-level logic modules?
-Why not train all bunch of Verilog samples in the same scheme, in the same configuration of LoRa fine-tuning?
+Based on these limitations, we propose \MyLLM, a reliable framework for partial Verilog generation that combines dedicated methods in both fine-tuning and inference. A key component of \MyLLM is an extensive dataset categorization based on a logic-ranking pipeline grounded in verifiable synthesis outcomes from \gls{eda} tools, rather than relying on \gls{llm}-based categorization~\cite{11133406}, which provides no guaranteed correctness for this step. Building on this synthesis-driven organization, \MyLLM employs a tailored fine-tuning scheme with ranking-based supervision and loss weighting to better align \glspl{slm} with expected behaviors across diverse Verilog complexities, and further integrates post-inference processing to detect and mitigate out-of-context generations, overly generic outputs, and logic-level failures. Collectively, these contributions improve the reliability of partial Verilog generation and establish a practical foundation for constructing more complex \gls{llm}-powered \gls{rtl} design flows.
+% what is my contribution?
+% \MyLLM 
+% fine-tuning and post-inference processing
+% reliable categorization solid logic-ranking
+% % is the synthesis-based categorization help, along with ?
+% % Does it help resolve any
+% % 
+% reliability in partial Verilog generation and .
+% From a dedicated fine-tuning scheme and inference techniques, \MyLLM constructs a solid foundation for building a complex \gls{llm}-based \gls{rtl} design flow based on reliable partial Verilog generation.
