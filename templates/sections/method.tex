@@ -1,76 +1,50 @@
-\section{\MyLLMTitle: Target Dataset, Fine-tuning Configuration, and Inference Technique}
+\section{\MyLLMTitle: Target Dataset, Fine-tuning Scheme, and Inference Technique}
 
-% Aplaca Prompt Template~\cite{taori2023alpaca} for instruction fine-tuning.
-
-What is the average number of tokens for the module in higher logic complexity?
-What is the average number of tokens for the module description and code?
-
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=\linewidth]{templates/figures/all_plot_final_4.pdf}
-%     \vspace{-1.5cm}
-%     \caption{Statistics of Number of Cells with Figure of Modules of Pyranet dataset~\cite{11133406}.}
-%     \label{fig:placeholder}
-% \end{figure}
-
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=\linewidth]{templates/figures/all_plot_final_5.pdf}
-%     \vspace{-1.5cm}
-%     \caption{Statistics of Number of Cells with Figure of Modules of Pyranet dataset~\cite{11133406} V2.}
-%     \label{fig:placeholder}
-% \end{figure}
+% 
+% \MyLLM\ is constructed based on curriculum-learning training and inference technique to enhance the reliability of partial Verilog generation of an \gls{slm}. Regarding training, our fine-tuning scheme is constructed from a solid categorization based on practical synthesis results of \gls{eda} tools. Pyranet~\cite{11133406} is selected as our training source due to its large volume containing more than $692K$ Verilog specifications. Based on these Verilog materials, we apply a practical categorization for all Verilog modules based on synthesis results from \gls{eda} tools. Especially, the categorization criterion is exactly based on the number of logic gates of Verilog designs. To calculate logic-gate numbers of all Verilog modules, \gls{eda} suite Yosys~\cite{wolf2013yosys} is used to perform generic synthesis, resulting in statistics of basic logic gates aligned with typical digital components, such as Flip Flops, or Multiplexer. After performing a massive synthesis process for all dataset samples, the highest logic-gate number is $1052421$. As illustrated in Table~\ref{tab:logic_statistic}, all Verilog modules are ranked with 5 tiers of logic complexities, ranging from \textit{Simple} to \textit{Extreme}, aligned with the number of logic gates from \textit{0-to-100} to \textit{100001-and-above}. Additionally, more than half of dataset volume, including more than $364K$ Verilog designs, are unsynthesizable, due to synthesis timeout and error. Except unsynthesizable Verilog modules, loss weighting is applied to the rest modules. Among all logic complexities, the tier \textit{Simple} is trained with the highest loss-weighting coefficient $1.0$ due to its high-level appropriateness to the ability of an \gls{slm}. The rest coefficients of loss weighting are $0.8$ to $0.2$, applied to the rest logic tiers. Based on this setting, the curriculum-leaning scheme is applied for all logic tiers from \textit{Simple} to \textit{Extreme} with corresponding loss-weighting coefficient in sequence.
+% 
+% para
+\MyLLM\ leverages a curriculum-learning strategy during training, together with inference techniques, to improve the reliability of partial Verilog generation for an \gls{slm}. For training, we design a fine-tuning pipeline built on a solid dataset categorization derived from practical synthesis outcomes produced by \gls{eda} tools. We use Pyranet~\cite{11133406} as the training corpus because it provides a large-scale collection of over $692\text{K}$ Verilog specifications. Using these materials, we categorize each Verilog module according to synthesis results, with the primary criterion being the estimated logic-gate count of the design. To obtain logic-gate-count statistics, we perform generic synthesis with the Yosys \gls{eda} suite~\cite{wolf2013yosys}, which reports counts of basic logic elements consistent with common digital blocks (e.g., flip-flops and multiplexers). After synthesizing the entire dataset, the maximum observed logic-gate count is $1{,}052{,}421$. As summarized in Table~\ref{tab:logic_statistic}, we rank designs into five logic-complexity tiers, from \textit{Simple} to \textit{Extreme}, spanning \textit{0-100} gates up to \textit{100001+} gates. Notably, more than half of the corpus (over $364\text{K}$ designs) is unsynthesizable due to synthesis errors or timeouts. For the remaining synthesizable modules, we apply loss weighting, where the tier \textit{Simple} receives the largest coefficient ($1.0$) because it best matches the capabilities of an \gls{slm}, while progressively smaller weights ($0.8$ down to $0.2$) are assigned to higher-complexity tiers. With these settings, we perform curriculum learning by training sequentially from \textit{Simple} to \textit{Extreme}, using the corresponding loss-weighting coefficients at each tier.
 
 \begin{table}[!htb]
 \centering
 \caption{Statistics of Logic Complexity of Pyranet Dataset~\cite{11133406}.}
 \label{tab:logic_statistic}
-\begin{tabular}{|l|l|l|l|l|}
+\begin{tabular}{|l|l|l|l|l|l|}
 \hline
- \textbf{Logic Complexity} & \textbf{Logic Cell Range} & \textbf{Total Samples} & \textbf{Lost Weighting}\\ \hline
-Low                       & 0-100                     & 287459                                   & $1.0$ \\ \hline
- Medium                    & 101-1000                  & 34161                                 & $0.8$\\ \hline
- \multirow{2}{*}{High}     & 1001-10000                & 4656                                  & $0.6$\\ \cline{2-4} 
-                           & 10001-100000              & 1139                                     & $0.4$\\ \hline
- \multirow{2}{*}{Extreme}  & 100001 and above          & 114                                     & $0.2$\\ \cline{2-4} 
-                          & Synthesis Timeout         & 2550                                     & \_\\ \hline
- Unknown                   & Synthesis Error           & 362159                                   & \_\\ \hline
+ \textbf{Index} & \textbf{Complexity} & \textbf{Cell Range} & \textbf{Number of Samples} & \textbf{Loss Weighting}\\ \hline
+1 & Simple                       & 0-100                     & 287459                                   & $1.0$ \\ \hline
+2 & Intermediate                    & 101-1000                  & 34161                                 & $0.8$\\ \hline
+3 & \multirow{2}{*}{Hard}     & 1001-10000                & 4656                                  & $0.6$\\ \cline{1-1}\cline{3-5} 
+4 &                           & 10001-100000              & 1139                                     & $0.4$\\ \hline
+5 & \multirow{2}{*}{Extreme}  & 100001+          & 114                                     & $0.2$\\ \cline{1-1}\cline{3-5} 
+\_ &                          & Synthesis Timeout         & 2550                                     & \_\\ \hline
+\_ & Unknown                   & Synthesis Error           & 362159                                   & \_\\ \hline
 \end{tabular}
 \end{table}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{templates/figures/all_plot_final_6.pdf}
-    \vspace{-1.5cm}
-    \caption{Statistics of Number of Cells with Figure of Modules of Pyranet dataset~\cite{11133406}.}
-    \label{fig:placeholder}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]{templates/figures/all_plot_final_6.pdf}
+%     \vspace{-1.5cm}
+%     \caption{Statistics of Number of Cells with Figure of Modules of Pyranet dataset~\cite{11133406}.}
+%     \label{fig:placeholder}
+% \end{figure}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{multirow}
-% \begin{table}[!htb]
-% \centering
-% \caption{Statistics of Logic Complexity of Pyranet Dataset~\cite{11133406}.}
-% \begin{tabular}{|l|l|l|l|l|l|}
-% \hline
-%  \textbf{Logic Complexity} & \textbf{Logic Cell Range} & \textbf{Total Samples} & \textbf{Total Tokens} & \textbf{Lost Weighting}\\ \hline
-% Low                       & 0-100                     & 287459                  & $170\mathrm{e}{6}$                 & $1.0$ \\ \hline
-%  Medium                    & 101-1000                  & 34161                  & $101\mathrm{e}6$               & $0.8$\\ \hline
-%  \multirow{2}{*}{High}     & 1001-10000                & 4656                  & $23\mathrm{e}6$                & $0.6$\\ \cline{2-5} 
-%                            & 10001-100000              & 1139                   & $3\mathrm{e}6$                  & $0.4$\\ \hline
-%  \multirow{2}{*}{Extreme}  & 100001 and above          & 114                   & $219\mathrm{e}3$                  & $0.2$\\ \cline{2-5} 
-%                           & Synthesis Timeout         & 2550                   & $3\mathrm{e}6$                  & \_\\ \hline
-%  Unknown                   & Synthesis Error           & 362159                 & $466\mathrm{e}6$                  & \_\\ \hline
-% \end{tabular}
-% \end{table}
+% 
+% Besides fine-tuning, we propose dedicated inference techniques to detect and resolve the typical unforeseen behavior of \gls{slm} in partial Verilog generation. Especially, the inference-related flow is demonstrated within the \textbf{Inference} block, illustrated in Fig. \ref{fig:lorav-processing}.
+% Within the processing of inference, all dedicated techniques take place in an iterative process \textbf{Common Verilog-Code Processing}. Overall, this process performs partial steps, listed in the \textbf{Verilog-Context Processing Flow}, in sequence. Particularly, after inference generation for Verilog output, \textbf{Over Context Detection} is placed to detect incomplete structures of a Verilog module constructed in a full-contexted output of \gls{llm}. This issue often takes place when \gls{llm} tries to make repetitive logic descriptions of large arrays of wires or registers. With this issue, we perform a subsequence iterative process for new generation attempts to query different outcomes from \gls{llm}. Secondly, \textbf{Generation Prompt Extraction} is applied to extract the major content of Verilog code when \gls{llm} tries to explain additional Verilog definitions before generating the major Verilog code. This issue is a resonsing failure when \gls{llm} disobeys the instruction rule in the code generation prompt ``\texttt{Generate the code only}'' and provides unnecessary explainations~\cite{10.1145/3691621.3694934}. In particular, on using Alpaca prompt structure~\cite{taori2023alpaca} in fine-tuning and inference, this issue is able to be resolved by providing an extraction of the major Verilog code after the Alpaca generation pattern ``\texttt{\#\#\# Resonpose: }''. Finally, the step \textbf{Logic Keywords Check} is constructed to detect general Verilog code without a behavior-specializing logic keyword, such as \texttt{assignment} or \texttt{always}. A general code only contains module definitions aligned with comment-patterned instructions to describe how to complete the generated Verilog code. To resolve this issue, subsequent prompt attempts are made to force the \gls{llm} complete the Verilog code with the must logic keywords.
+% 
+% para
+In addition to fine-tuning, we introduce a set of inference techniques designed to identify and correct common unintended behaviors of \glspl{slm} during partial Verilog generation. The overall inference workflow corresponds to the \textbf{Inference} block in Fig.~\ref{fig:lorav-processing}. All proposed techniques are executed iteratively within the \textbf{Common Verilog-Code Processing} loop, which applies the steps in the \textbf{Verilog-Context Processing Flow} in order. Specifically, after producing an initial Verilog output, we apply \textbf{Over Context Detection} to identify incomplete module structures that arise when the \gls{llm} generates overly long, fully contextual outputs, an issue frequently triggered by repetitive descriptions of large wire/register arrays. When this condition is detected, we re-enter the loop and query the \gls{llm} again to obtain alternative generations. Next, \textbf{Generation Prompt Extraction} is used to isolate the core Verilog code when the \gls{llm} prepends explanations or auxiliary definitions instead of following the prompt constraint “\texttt{Generate the code only},” which reflects a reasoning or instruction-following failure~\cite{10.1145/3691621.3694934}. When using the Alpaca prompt format~\cite{taori2023alpaca} for both fine-tuning and inference, this can be handled by extracting the code segment that follows the standard Alpaca marker “\texttt{\#\#\# Response:}”. Finally, we perform a \textbf{Logic Keywords Check} to detect overly generic outputs that omit behavior-defining Verilog keywords such as \texttt{assign} or \texttt{always}. Such outputs typically include only module headers and comment-patterned guidance rather than executable logic. To address this case, we issue follow-up prompts that explicitly require the missing constructs, forcing the \gls{llm} to complete the module with the necessary logic keywords. Together, these iterative inference techniques and targeted re-prompting steps substantially improve the robustness and completeness of partial Verilog generation from \glspl{slm}.
 
-\begin{figure}
+\begin{figure}[!htb]
     \centering
     % \includegraphics[width=\linewidth]
-    \includegraphics[scale=0.6]
+    \includegraphics[scale=0.55]
     {templates/figures/ICICT.pdf}
     % \vspace{-1.5cm}
-    \caption{\MyLLMTitle\ Processing Scheme for dataset processing and inference.}
+    \caption{\MyLLMTitle\ Processing Scheme for dataset filtering and inference.}
     \label{fig:lorav-processing}
 \end{figure}
 

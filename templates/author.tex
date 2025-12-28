@@ -36,6 +36,7 @@
 
 % \def\M-#1{M\nobreakdash-#1}
 % \def\MyLLM{\M-{Verilog}}
+
 \begin{document}
 %
 % https://tex.stackexchange.com/questions/4709/how-do-i-set-a-maximum-column-width
@@ -88,7 +89,10 @@
 % Our public \gls{llm} and \break source code can be accessed at \url{https://huggingface.co/nvmthanhhcmus/LORAV-DeepSeek-Coder}.
 % 
 % Paraphrase
-\glspl{llm} have demonstrated strong potential across multiple stages of \gls{rtl} design, but partial \gls{rtl} generation still suffers from reliability issues and can exhibit unforeseen logic behaviors. To overcome these limitations, we propose \MyLLM, a comprehensive framework that constructs both fine-tuning and inference for partial Verilog generation. For dataset construction, we adopt a ranking-based strategy with loss weighting to encourage the desired \gls{llm} behavior during fine-tuning across a range of Verilog complexities. During generation, we further apply specialized methods to mitigate anomalous prompting outcomes and incorrect logic patterns in \gls{llm} outputs. When applied to DeepSeek-Coder-7B, our 7B model surpasses both commercial and open-source \glspl{llm} on the VerilogEval V2 at the Code Completion task. Overall, \MyLLM\ establishes a solid foundation for partial Verilog generation and supports future hybrid architectures, such as agentic \glspl{llm}, for \gls{llm}-powered \gls{rtl} design. Our public \gls{llm} and source code are available at \break\url{https://huggingface.co/nvmthanhhcmus/LORAV-DeepSeek-Coder}.
+\glspl{llm} have demonstrated strong potential across multiple stages of \gls{rtl} design, but partial \gls{rtl} generation still suffers from reliability issues and can exhibit output with unforeseen logic behaviors. To overcome these limitations, we propose \MyLLM, a comprehensive framework that constructs both fine-tuning and inference for partial Verilog generation. 
+% For dataset construction, we adopt a ranking-based strategy with loss weighting to encourage the desired \gls{llm} behavior during fine-tuning across a range of Verilog complexities. 
+Regarding \gls{llm} fine-tuning, we adopt an efficient curriculum learning scheme with loss weighting to encourage the desired \gls{llm} behavior during fine-tuning across a range of Verilog complexities. 
+During generation, we further apply specialized methods to mitigate anomalous prompting outcomes and incorrect logic patterns in \gls{llm} outputs. When applied to DeepSeek-Coder-7B, our 7B model surpasses both commercial and open-source \glspl{llm} on the VerilogEval V2 at the Code Completion task. Overall, \MyLLM\ establishes a solid foundation for partial Verilog generation and supports future hybrid architectures, such as agentic \glspl{llm}, for \gls{llm}-powered \gls{rtl} design. Our public \gls{llm} and source code are available at \url{https://huggingface.co/nvmthanhhcmus/LORAV-DeepSeek-Coder}.
 
 % 
 % 
@@ -112,7 +116,6 @@
 \glsresetall
 
 \input{sections/introduction}
-
 
 \input{sections/method}
 \input{sections/result}

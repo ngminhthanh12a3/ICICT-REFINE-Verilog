@@ -1,0 +1,20 @@
+
+% Aplaca Prompt Template~\cite{taori2023alpaca} for instruction fine-tuning.
+
+What is the average number of tokens for the module in higher logic complexity?
+What is the average number of tokens for the module description and code?
+
+Pyranet dataset~\cite{11133406}.
+
+% 
+% Is it an easy process for the whole Verilog modules?
+% 
+In order to construct synthesis statistics for a large number of $692K$ Verilog modules of the dataset Pyranet, with specific limits in time and memory.
+% 
+We perform a long-run process for logic synthesis of $692K$ Verilog from the dataset. In order to prevent out-of-resource, a multi-process and resource-constrained configuration for each Verilog module. Based on this, each synthesis process of a Verilog module is limited to a 5-minute timeout and $2 GB$ of memory.
+% 
+Within our synthesis scheme, statistics, the highest logic number is $1.1M$, related to a module.
+statistics, the total token
+% 
+Following Pyranet fine-tuning scheme, we apply \textit{Curriculum Learning} to our data after categorization with loss weighting for each tier of logic complexities.
+Table \ref{tab:logic_statistic}
